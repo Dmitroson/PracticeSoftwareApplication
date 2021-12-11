@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PracticeSoftwareApplication.DomainModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,23 +9,20 @@ namespace PracticeSoftwareApplication.Controllers
 {
     public class HomeController : Controller
     {
+        [HttpGet]
         public ActionResult Index()
         {
-            return View();
-        }
+            using (var db = ApplicationDbContext.Create())
+            {
+                var topTeachers = db.Teachers
+                    .OrderByDescending(t => t.Votes)
+                    .ThenBy(t => t.LastName)
+                    .ThenBy(t => t.FirstName)
+                    .Take(10)
+                    .ToList();
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+                return View(topTeachers);
+            }
         }
     }
 }

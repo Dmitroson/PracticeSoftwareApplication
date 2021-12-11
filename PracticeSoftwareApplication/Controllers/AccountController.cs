@@ -18,6 +18,8 @@ namespace PracticeSoftwareApplication.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        public static string Name => "Account";
+
         public AccountController()
         {
         }
