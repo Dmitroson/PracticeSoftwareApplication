@@ -83,6 +83,18 @@ namespace PracticeSoftwareApplication
                 defaults: new { controller = AdminUserController.Name, action = "Register" }
             );
 
+            routes.MapRoute(
+                name: "Admin_Logout",
+                url: "admin/logout",
+                defaults: new { controller = AdminUserController.Name, action = "LogOff" }
+            );
+
+            routes.MapRoute(
+                name: "Admin_RemoveSelf",
+                url: "admin/self-remove",
+                defaults: new { controller = AdminUserController.Name, action = "RemoveSelf" }
+            );
+
             #endregion
 
             routes.MapRoute(
@@ -95,6 +107,24 @@ namespace PracticeSoftwareApplication
                 name: "Signup",
                 url: "signup",
                 defaults: new { controller = AccountController.Name, action = "Register" }
+            );
+
+            routes.MapRoute(
+                name: "Participate",
+                url: "participate",
+                defaults: new { controller = HomeController.Name, action = "Participate" }
+            );
+
+            routes.MapRoute(
+                name: "AddVote",
+                url: "vote/add",
+                defaults: new { controller = HomeController.Name, action = "AddVote" }
+            );
+
+            routes.MapRoute(
+                name: "RemoveVote",
+                url: "vote/remove",
+                defaults: new { controller = HomeController.Name, action = "RemoveVote" }
             );
 
             routes.MapRoute(

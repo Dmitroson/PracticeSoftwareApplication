@@ -162,20 +162,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abilities\AddNewAdminUserAbility.cs" />
+    <Compile Include="Abilities\Ability.cs" />
+    <Compile Include="Abilities\ParticipateInVotingAbility.cs" />
+    <Compile Include="Abilities\VoteAbility.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="Controllers\Admin\AdminUserController.cs" />
     <Compile Include="Controllers\Admin\GeneralController.cs" />
     <Compile Include="Controllers\Admin\SubjectController.cs" />
     <Compile Include="Controllers\Admin\TeachersController.cs" />
+    <Compile Include="Controllers\Authorization\AllowNewAdminUsersRegistration.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DomainModels\ApplicationDbContext.cs" />
+    <Compile Include="DomainModels\IEntity.cs" />
     <Compile Include="DomainModels\Subject\Subject.cs" />
     <Compile Include="DomainModels\Teachers\Teacher.cs" />
     <Compile Include="Global.asax.cs">
@@ -185,11 +192,21 @@
     <Compile Include="Migrations\202112110013482_AddTeachersAndSubjectsTables.Designer.cs">
       <DependentUpon>202112110013482_AddTeachersAndSubjectsTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112111727002_AddApplicationUserReferenceToTeacherEntity.cs" />
+    <Compile Include="Migrations\202112111727002_AddApplicationUserReferenceToTeacherEntity.Designer.cs">
+      <DependentUpon>202112111727002_AddApplicationUserReferenceToTeacherEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdminUserViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\SearchViewModels.cs" />
+    <Compile Include="Models\ViewModelHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\TeachersFilter.cs" />
+    <Compile Include="Search\ISearcher.cs" />
+    <Compile Include="Search\Searcher.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +218,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\behaviour\voting.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -256,10 +274,13 @@
     <Content Include="Views\Subject\Edit.cshtml" />
     <Content Include="Views\Teachers\Create.cshtml" />
     <Content Include="Views\Teachers\Edit.cshtml" />
+    <Content Include="Views\AdminUser\Login.cshtml" />
+    <Content Include="Views\AdminUser\Register.cshtml" />
+    <Content Include="Views\Shared\_AdminLoginPartial.cshtml" />
+    <Content Include="Views\Shared\_FilterBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Voting\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -277,6 +298,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202112110013482_AddTeachersAndSubjectsTables.resx">
       <DependentUpon>202112110013482_AddTeachersAndSubjectsTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112111727002_AddApplicationUserReferenceToTeacherEntity.resx">
+      <DependentUpon>202112111727002_AddApplicationUserReferenceToTeacherEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

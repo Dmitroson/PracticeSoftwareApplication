@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using PracticeSoftwareApplication.DomainModels;
 using PracticeSoftwareApplication.Models;
 
 namespace PracticeSoftwareApplication.Controllers
@@ -157,14 +158,15 @@ namespace PracticeSoftwareApplication.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    var teacher = CreateTeacher(model);
+                    teacher.ApplicationUserId = user.Id;
+                    using (var db = ApplicationDbContext.Create())
+                    {
+                        db.Teachers.Add(teacher);
+                        db.SaveChanges();
+                    }
 
+                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -172,6 +174,20 @@ namespace PracticeSoftwareApplication.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        protected Teacher CreateTeacher(RegisterViewModel model)
+        {
+            return new Teacher
+            {
+                Id = Guid.NewGuid(),
+                FirstName = model.FirstName,
+                MiddleName = model.MiddleName,
+                LastName = model.LastName,
+                SubjectId = model.SubjectId,
+                WorkPlace = model.WorkPlace,
+                Votes = 0
+            };
         }
 
         //

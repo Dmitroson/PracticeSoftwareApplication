@@ -5,7 +5,7 @@ using System.Web;
 
 namespace PracticeSoftwareApplication.DomainModels
 {
-    public class Subject
+    public class Subject : IEntity
     {
         public Guid Id { get; set; }
 

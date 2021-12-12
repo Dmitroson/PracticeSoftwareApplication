@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace PracticeSoftwareApplication.Models
@@ -49,34 +50,54 @@ namespace PracticeSoftwareApplication.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Електронна пошта")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Запам'ятати мене?")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Ім'я")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "По-батькові")]
+        public string MiddleName { get; set; }
+
+        [Required]
+        [Display(Name = "Прізвище")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Предмет")]
+        public Guid SubjectId { get; set; }
+
+        [Required]
+        [Display(Name = "Місце роботи")]
+        public string WorkPlace { get; set; }
+
+        [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Електронна пошта")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Підтвердьте пароль.")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }

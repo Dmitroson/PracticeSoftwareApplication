@@ -6,14 +6,13 @@ using System.Web.Mvc;
 
 namespace PracticeSoftwareApplication.Controllers.Admin
 {
-    [Authorize]
-    public class GeneralController : BaseController
+    public class GeneralController : AdminController
     {
         public static string Name => "General";
 
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", TeachersController.Name);
         }
     }
 }

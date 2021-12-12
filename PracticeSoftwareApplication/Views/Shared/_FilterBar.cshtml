@@ -1,0 +1,20 @@
+﻿@model PracticeSoftwareApplication.Models.FilterViewModel
+@using PracticeSoftwareApplication.Models
+@using PracticeSoftwareApplication.DomainModels
+
+@{ 
+    var subjectsSelectList = ViewModelHelper.CreateSubjectsSelectList(string.IsNullOrEmpty(Model?.Subject) ? Guid.Empty : new Guid(Model.Subject));
+}
+
+<div>
+    @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "navbar-form navbar-left" }))
+    {
+        <div class="form-group">
+            <input type="text" name="q" class="form-control" value="@Model.Query" placeholder="Search">
+        </div>
+        <div class="form-group">
+            @Html.DropDownList("subject", subjectsSelectList, "Будь-який предмет", new { @class = "form-control" })
+        </div>
+        <button type="submit" class="btn btn-default">Пошук</button>
+    }
+</div>

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using PracticeSoftwareApplication.Controllers.Authorization;
+using PracticeSoftwareApplication.DomainModels;
 using PracticeSoftwareApplication.Models;
 using System;
 using System.Collections.Generic;
@@ -11,47 +13,10 @@ using System.Web.Mvc;
 
 namespace PracticeSoftwareApplication.Controllers.Admin
 {
-    [Authorize]
-    public class AdminUserController : BaseController
+    public class AdminUserController : AdminController
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
-
         public static string Name => "AdminUser";
 
-        public AdminUserController()
-        {
-        }
-
-        public AdminUserController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set
-            {
-                _signInManager = value;
-            }
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -63,7 +28,7 @@ namespace PracticeSoftwareApplication.Controllers.Admin
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(AdminLoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -89,6 +54,7 @@ namespace PracticeSoftwareApplication.Controllers.Admin
         }
 
         [AllowAnonymous]
+        [AllowNewAdminUsersRegistration]
         public ActionResult Register()
         {
             return View();
@@ -96,8 +62,9 @@ namespace PracticeSoftwareApplication.Controllers.Admin
 
         [HttpPost]
         [AllowAnonymous]
+        [AllowNewAdminUsersRegistration]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(AdminRegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -105,15 +72,9 @@ namespace PracticeSoftwareApplication.Controllers.Admin
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user.Id, "Admin");
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", GeneralController.Name);
                 }
                 AddErrors(result);
             }
@@ -130,24 +91,14 @@ namespace PracticeSoftwareApplication.Controllers.Admin
             return RedirectToAction("Index", "Home");
         }
 
-        protected override void Dispose(bool disposing)
+        public ActionResult RemoveSelf()
         {
-            if (disposing)
-            {
-                if (_userManager != null)
-                {
-                    _userManager.Dispose();
-                    _userManager = null;
-                }
+            var userId = User.Identity.GetUserId();
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
 
-                if (_signInManager != null)
-                {
-                    _signInManager.Dispose();
-                    _signInManager = null;
-                }
-            }
-
-            base.Dispose(disposing);
+            var adminUser = UserManager.Users.SingleOrDefault(u => u.Id.Equals(userId));
+            UserManager.Delete(adminUser);
+            return RedirectToAction("Register");
         }
 
         #region Helpers

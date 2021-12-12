@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace PracticeSoftwareApplication.Controllers.Admin
 {
-    public class SubjectController : BaseController
+    public class SubjectController : AdminController
     {
         public static string Name => "Subject";
 

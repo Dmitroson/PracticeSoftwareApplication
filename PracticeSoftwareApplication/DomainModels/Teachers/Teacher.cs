@@ -1,11 +1,12 @@
-﻿using System;
+﻿using PracticeSoftwareApplication.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace PracticeSoftwareApplication.DomainModels
 {
-    public class Teacher
+    public class Teacher : IEntity
     {
         public Guid Id { get; set; }
 
@@ -24,5 +25,9 @@ namespace PracticeSoftwareApplication.DomainModels
         public long Votes { get; set; }
 
         public Subject Subject { get; set; }
+
+        public string ApplicationUserId { get; set; }
+
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

@@ -1,6 +1,9 @@
 ﻿@model PracticeSoftwareApplication.Models.RegisterViewModel
+@using PracticeSoftwareApplication.Models
+
 @{
     ViewBag.Title = "Register";
+    var subjects = ViewModelHelper.CreateSubjectsSelectList(Model?.SubjectId);
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -11,6 +14,43 @@
     <h4>Create a new account.</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.MiddleName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.MiddleName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.SubjectId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.SubjectId, subjects, "Оберіть предмет", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.SubjectId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.WorkPlace, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.WorkPlace, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.WorkPlace, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
