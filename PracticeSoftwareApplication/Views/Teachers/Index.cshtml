@@ -6,19 +6,19 @@
     ViewBag.Title = "Вчителі";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<h2>Index</h2>
+<h2>Список вчителів</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Зареєструвати нового", "Create")
 </p>
 
 <div>
     <table class="table table-hover">
         <tr>
-            <th>Name</th>
-            <th>Subject</th>
-            <th>Work place</th>
-            <th>Votes</th>
+            <th>Вчитель</th>
+            <th>Предмет</th>
+            <th>Місце роботи</th>
+            <th>Кількість голосів</th>
             <th></th>
         </tr>
         @foreach (var teacher in Model)
@@ -29,8 +29,8 @@
                 <td>@teacher.WorkPlace</td>
                 <td>@teacher.Votes</td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = teacher.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = teacher.Id })
+                    @Html.ActionLink("Редагувати", "Edit", new { id = teacher.Id }) |
+                    @Html.ActionLink("Видалити", "Delete", new { id = teacher.Id })
                 </td>
             </tr>
         }

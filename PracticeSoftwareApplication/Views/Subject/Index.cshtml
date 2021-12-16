@@ -1,19 +1,19 @@
 ﻿@model IEnumerable<PracticeSoftwareApplication.DomainModels.Subject>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Предмети";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Список предметів</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Створити новий", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayName("Предмет")
         </th>
         <th></th>
     </tr>
@@ -24,8 +24,8 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Редагувати", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Видалити", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

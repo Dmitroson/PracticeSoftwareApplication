@@ -97,7 +97,7 @@ namespace PracticeSoftwareApplication.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Підтвердьте пароль.")]
+        [Display(Name = "Підтвердьте пароль")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }

@@ -10,7 +10,7 @@
     @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "navbar-form navbar-left" }))
     {
         <div class="form-group">
-            <input type="text" name="q" class="form-control" value="@Model.Query" placeholder="Search">
+            <input type="text" name="q" class="form-control" value="@Model.Query" placeholder="Пошук">
         </div>
         <div class="form-group">
             @Html.DropDownList("subject", subjectsSelectList, "Будь-який предмет", new { @class = "form-control" })
