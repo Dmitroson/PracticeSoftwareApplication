@@ -103,5 +103,10 @@ namespace PracticeSoftwareApplication.Controllers
 
             return $"Vote_{user?.Id ?? "ANONYMOUS"}";
         }
+
+        public ActionResult About()
+        {
+            return View();
+        }
     }
 }
